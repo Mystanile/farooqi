@@ -1,0 +1,25 @@
+# Dictionary (hash table) example
+phonebook = {"Alice": 123, "Bob": 456}
+print(phonebook["Alice"])   # lookup by key (O(1) avg), outputs 123
+phonebook["Charlie"] = 789  # insert new key-value pair
+print("Charlie" in phonebook)  # True (membership is O(1) avg)
+del phonebook["Bob"]        # delete entry by key
+print(phonebook)            # {'Alice': 123, 'Charlie': 789}
+
+
+# A hash table is a data structure that stores key-value pairs and uses a hash function to compute an index (hash code) from each key​
+# tutorialspoint.com
+# . Python’s built-in dict is a hash table implementation. Hash tables allow very fast lookups by key: inserting, deleting, and getting a value by key are average-case O(1) operations. For example, doing d["apple"] = 5 or d.get("apple") is on average constant time. This is because the key is hashed to find its bucket. The worst-case time can degrade to O(n) if many keys collide into the same bucket (e.g., all keys have the same hash)​
+# geeksforgeeks.org
+# . Hash tables are used whenever you need associative arrays or maps (e.g., counting frequency of words, indexing records, caching).
+# When to use: Fast lookup, insertion, and deletion by a unique key. Implementing maps, dictionaries, or caches. Useful in counting, grouping, or any case of unique key-based access.
+# Time complexity (Python dict):
+# Average-case: O(1) for lookup, insert, delete​
+# en.wikipedia.org
+# ​
+# geeksforgeeks.org
+# .
+# Worst-case: O(n) if many collisions occur​
+# geeksforgeeks.org
+# .
+# Space: O(n) for n key-value pairs.

@@ -1,0 +1,32 @@
+1. Primitive Data Structures
+int, float, char, bool, etc.
+
+2. Linear Data Structures
+
+Elements are arranged in a sequence.
+
+Structure	            Description	                                    Big-O (Search/Insert)	            Python Equivalent
+Array/List	            Fixed or dynamic-sized collection	            O(n) / O(1)append	                list
+Stack	                Last In, First Out (LIFO)	                    O(n) / O(1) push/pop	            list or collections.deque
+Queue	                First In, First Out (FIFO)	                    O(n) / O(1) enqueue	                collections.deque
+Linked List	            Nodes pointing to next (and maybe previous)	    O(n) / O(1) insert at head	        custom class
+
+
+3. Non-linear Data Structures
+
+| Structure |                    Description |                          Use Case |
+| **Tree** |                    Hierarchical (root, branches, leaves) | Filesystems, databases |
+| **Binary Search Tree (BST)** | Sorted binary tree |                   Fast lookup (avg O(log n)) |
+| **Heap** |                    Priority-based tree |                   Scheduling, heapsort |
+| **Trie** |                    Prefix tree |                           Auto-complete, spell-check |
+| **Graph** |                   Nodes + connections (edges) |           Social networks, maps |
+
+
+4. Hash-Based Structures
+
+| Structure |       Description |                       Python Equivalent |
+
+| **Hash Table** |  Key-value pairs with fast lookup |  `dict` |
+| **Set** |         Unordered unique elements |         `set` |
+
+

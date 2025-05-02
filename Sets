@@ -1,0 +1,26 @@
+# Python set example
+s = {1, 2, 3}
+s.add(2)                # adding duplicate does nothing
+print(s)                # {1, 2, 3}
+print(2 in s, 4 in s)   # membership check: True, False (O(1) avg)
+s.remove(3)             # remove element
+print(s)                # {1, 2}
+
+
+# A set is an unordered collection of unique elements​
+# en.wikipedia.org
+# . In Python, the built-in set type implements a hash set, where elements are hashed (like keys in a dict) so membership tests (x in s) and additions/removals are very fast on average. Sets are used when you need to store distinct items and quickly check for membership or eliminate duplicates. For example, removing duplicate values from a list or keeping track of seen elements. Since sets are hash-based, typical operations like add, remove, and membership test are O(1) on average​
+# geeksforgeeks.org
+# . In the worst case (many collisions), these degrade to O(n)​
+# geeksforgeeks.org
+# .
+# When to use: When order doesn’t matter and you need uniqueness and fast membership checks. Useful for deduplication, membership queries, set operations (union, intersection), and as an efficient way to track visited items.
+# Time complexity (Python set):
+# Add/discard/in: O(1) average​
+# geeksforgeeks.org
+# .
+# Remove (remove()): O(1) average.
+# Worst-case: O(n) in case of many hash collisions​
+# geeksforgeeks.org
+# .
+# Space: O(n).
