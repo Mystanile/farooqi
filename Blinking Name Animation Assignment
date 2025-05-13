@@ -1,0 +1,215 @@
+# Name of Student: Mohammad Khalil
+# Date of Assignment: May 12, 2025
+# Name of Assignment: Blinking Name Animation Assignment
+
+#draw the name Mohammad
+import turtle
+import math
+
+def firstname():
+    # Set up the turtle
+    turtle.speed(100) #speed is between 1 and 10
+    turtle.pensize(5)
+
+    # Draw the letter M
+    turtle.penup()
+    turtle.setheading(0)
+    turtle.goto(-400, 100)
+    turtle.pendown()
+    turtle.left(90)
+    turtle.forward(100)
+    turtle.right(150)
+    turtle.forward(100)
+    turtle.left(120)
+    turtle.forward(100)
+    turtle.right(150)
+    turtle.forward(100)
+
+    # Draw the letter O
+    turtle.penup()
+    turtle.goto(-270, 150)
+    turtle.pendown()
+    turtle.circle(50)
+
+    # Draw the letter H
+    turtle.penup()
+    turtle.goto(-150, 100)
+    turtle.pendown()
+    turtle.setheading(90)
+    turtle.forward(50)
+    turtle.right(90)
+    turtle.forward(50)
+    turtle.right(90)
+    turtle.forward(50)
+    turtle.right(180)
+    turtle.forward(100)
+    turtle.right(180)
+    turtle.forward(50)
+    turtle.right(90)
+    turtle.forward(50)
+    turtle.right(90)
+    turtle.forward(50)
+
+    # Draw the letter A
+    turtle.penup()
+    turtle.goto(-70, 100)
+    turtle.pendown()
+    turtle.setheading(75)
+    turtle.forward(100)
+    turtle.right(150)
+    turtle.forward(100)
+    turtle.right(180)
+    turtle.forward(50)
+    turtle.setheading(180)
+    turtle.forward(26)
+ 
+
+    # Draw the letter M
+    turtle.setheading(0)
+    turtle.penup()
+    turtle.goto(20, 100)
+    turtle.pendown()
+    turtle.left(90)
+    turtle.forward(100)
+    turtle.right(150)
+    turtle.forward(100)
+    turtle.left(120)
+    turtle.forward(100)
+    turtle.right(150)
+    turtle.forward(100)
+
+    # Draw the letter M
+    turtle.setheading(0)
+    turtle.penup()
+    turtle.goto(160, 100)
+    turtle.pendown()
+    turtle.left(90)
+    turtle.forward(100)
+    turtle.right(150)
+    turtle.forward(100)
+    turtle.left(120)
+    turtle.forward(100)
+    turtle.right(150)
+    turtle.forward(100)
+
+    # Draw the letter A
+    turtle.penup()
+    turtle.goto(290, 100)
+    turtle.pendown()
+    turtle.setheading(75)
+    turtle.forward(100)
+    turtle.right(150)
+    turtle.forward(100)
+    turtle.right(180)
+    turtle.forward(50)
+    turtle.setheading(180)
+    turtle.forward(26)
+
+    # Draw the letter D
+    turtle.penup()
+    turtle.goto(360, 100)
+    turtle.pendown()
+    turtle.setheading(90)
+    turtle.forward(100)
+    turtle.goto(360, 100)
+    turtle.right(90)
+    turtle.circle(50, 180)
+    turtle.right(90)
+
+def lastname():
+    # Draw the letter K
+    turtle.penup()
+    turtle.goto(-400, -50)
+    turtle.pendown()
+    turtle.setheading(90)
+    turtle.forward(100)
+    turtle.goto(-400, 0) 
+    turtle.setheading(45)
+    turtle.forward(math.sqrt(2) * 50)
+    turtle.goto(-400, 0)
+    turtle.setheading(315)
+    turtle.forward(math.sqrt(2) * 50)
+
+    # Draw the letter H
+    turtle.penup()
+    turtle.goto(-310, -50)
+    turtle.pendown()
+    turtle.setheading(90)
+    turtle.forward(50)
+    turtle.right(90)
+    turtle.forward(50)
+    turtle.right(90)
+    turtle.forward(50)
+    turtle.right(180)
+    turtle.forward(100)
+    turtle.right(180)
+    turtle.forward(50)
+    turtle.right(90)
+    turtle.forward(50)
+    turtle.right(90)
+    turtle.forward(50)
+
+    # Draw the letter A
+    turtle.penup()
+    turtle.goto(-220, -50)
+    turtle.pendown()
+    turtle.setheading(75)
+    turtle.forward(100)
+    turtle.right(150)
+    turtle.forward(100)
+    turtle.right(180)
+    turtle.forward(50)
+    turtle.setheading(180)
+    turtle.forward(26)
+
+    #Draw the letter L
+    turtle.penup()
+    turtle.goto(-150, -50)
+    turtle.pendown()
+    turtle.setheading(90)
+    turtle.forward(100)
+    turtle.goto(-150, -50)
+    turtle.right(90)
+    turtle.forward(50)
+
+    #Draw the letter I
+    turtle.penup()
+    turtle.goto(-80, -50)
+    turtle.pendown()
+    turtle.setheading(90)
+    turtle.forward(100)
+    turtle.goto(-80, -50)
+
+    #Draw the letter L
+    turtle.penup()
+    turtle.goto(-60, -50)
+    turtle.pendown()
+    turtle.setheading(90)
+    turtle.forward(100)
+    turtle.goto(-60, -50)
+    turtle.right(90)
+    turtle.forward(50)
+
+#generate random colors
+import random
+def random_color():
+    return random.random(), random.random(), random.random() 
+
+
+#make the first name blink with two different colors
+def blinkName():
+    for i in range (6):
+        turtle.color(random_color())
+        firstname()
+        turtle.hideturtle()
+        turtle.update()
+        lastname()
+
+
+
+firstname()
+lastname()
+# Call the blink functions in a loop
+while True:
+    blinkName()
+
