@@ -1,0 +1,74 @@
+#positional Argument
+def greet(name, age):
+    print(f"Hello, my name is {name} and I am {age} years old.")
+
+greet("Alice", 25)  # Correct: Order matters
+greet(25, "Alice")  # Incorrect: Order is swapped
+
+# Keyword Argument
+def greet2(name, age):
+    print(f"Hello, my name is {name} and I am {age} years old.")
+
+greet2(age=25, name="Alice")  # Order doesn't matter
+
+# Default Argument
+def greet3(name="Guest", age=18):
+    print(f"Hello, my name is {name} and I am {age} years old.")
+
+greet3()  # Uses default values: "Guest" and 18
+greet3("Bob")  # Overrides name but keeps default age
+greet3("Eve", 30)  # Overrides both
+
+#Arbitrary Argument
+
+def add_numbers(*args):
+    return sum(args)
+
+print(add_numbers(1, 2, 3, 4, 5))  # Output: 15
+print(add_numbers(10, 20))  # Output: 30
+
+def display_info(**kwargs):
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+display_info(name="Alice", age=25, city="New York")
+
+
+
+def odd_or_even(num):
+    if num % 2 == 0:
+        return "Even"
+    else:
+        return "Odd"
+    
+def is_even(num):
+    return num % 2 == 0
+
+num1 = int(input("Enter a number: "))
+
+if is_even(num1) == True:
+    print("Even")
+else:
+    print("Odd")
+
+
+#Function to reverse a string
+
+def reverse_string(string):
+    return string[::-1]
+
+print(reverse_string("Hello"))  # Output: "olleH"
+
+#Function to find the max of three numbers
+def max_of_three(num1, num2, num3):
+    return max(num1, num2, num3)
+print(max_of_three(5, 2, 7))  # Output: 7
+
+#Function to check if a number is prime
+def is_prime(num):
+    if num < 2:
+        return False
+    for i in range(2, num):
+        if num % i == 0:
+            return False
+    return True

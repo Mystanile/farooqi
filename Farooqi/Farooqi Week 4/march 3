@@ -1,0 +1,25 @@
+def greet(first_name, last_name):
+    print(f"Hi {first_name} {last_name}", end=", ")
+    print("Welcome aboard")
+
+greet("ts class", "pmo")
+greet("farooqi", "tmo")
+
+#arguments vs parameters
+#parameters are the variables in the function definition
+#arguments are the values that are passed to the function when it is called
+#in the above example, first_name and last_name are parameters
+#ts class and pmo are arguments
+
+def get_greeting(name):
+    return f"Hi {name}"
+
+message = get_greeting("ts pmo")
+#file = open("content.txt", "w")
+#file.write(message)
+
+def increment(number, by):
+    return number + by
+
+result = increment(2, 1)
+print(result)

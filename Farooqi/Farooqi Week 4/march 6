@@ -1,0 +1,28 @@
+#num1 = int(input("Enter a number: "))
+#for i in range(num1, 0, -1): # What this does is it starts at the number you input and goes down to 0. The -1 is the step. It goes down by 1 each time.
+#    print("* " * i)
+
+#number printer
+#num2 = int(input("Enter a number: "))
+#for i in range(1, num2+1): 
+#    for j in range(1, num2-i+2): 
+#        print(j, end=" ") 
+#    print() 
+
+
+# normal function and lambda function assignment (perform arithmetic operations (+-*/) by receiving two inputs from user)
+
+n1 = int(input("Enter a number: "))
+n2 = int(input("Enter another number: "))
+
+def arithmetic(n1, n2):
+    add = (f" {n1} + {n2} = {n1 + n2}",)
+    sub = (f" {n1} - {n2} = {n1 - n2}")
+    mult = (f" {n1} * {n2} = {n1 * n2}")
+    div = (f" {n1} / {n2} = {n1 / n2}")
+    output = (f" {n1} + {n2} = {n1 + n2}", f" {n1} - {n2} = {n1 - n2}", f" {n1} * {n2} = {n1 * n2}", f" {n1} / {n2} = {n1 / n2}")
+    return output
+print(arithmetic(n1, n2))
+
+lambda_arithmetic = lambda n1, n2: (n1 + n2, n1 - n2, n1 * n2, n1 / n2)
+print(lambda_arithmetic(n1, n2))

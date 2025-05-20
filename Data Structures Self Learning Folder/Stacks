@@ -1,0 +1,22 @@
+# Stack example using a Python list
+stack = []
+stack.append(10)    # push 10
+stack.append(20)    # push 20
+print(stack)        # [10, 20]
+print(stack.pop())  # pop -> 20 (last in, first out)
+print(stack)        # [10]
+stack.append(30)
+print(stack.pop())  # pop -> 30
+print(stack.pop())  # pop -> 10
+
+
+
+# A stack is a linear data structure that follows Last-In-First-Out (LIFO) order​
+# geeksforgeeks.org
+# . Think of a stack of plates: you add (push) and remove (pop) plates from the top of the pile. Stacks are used in scenarios like function call management (the call stack), depth-first search, or undo mechanisms. In Python, you can use a list as a stack (using append() for push and pop() for pop), or use collections.deque for efficiency. All stack operations are generally O(1) time.
+# When to use: When you need LIFO behavior: parsing (e.g., matching parentheses), DFS, function call history, backtracking.
+# Time complexity:
+# Push (append): O(1).
+# Pop (from top): O(1).
+# Peek (inspect top): O(1).
+# Space: O(n).

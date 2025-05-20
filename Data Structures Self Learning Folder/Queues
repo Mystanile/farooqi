@@ -1,0 +1,20 @@
+from collections import deque # Import deque from collections module
+
+# Queue example using deque
+queue = deque()
+queue.append("a")   # enqueue 'a'
+queue.append("b")   # enqueue 'b'
+queue.append("c")   # queue is ['a', 'b', 'c']
+print(queue.popleft())  # dequeue -> 'a'
+print(queue.popleft())  # dequeue -> 'b'
+print(queue)            # remaining: deque(['c'])
+
+
+# A queue is a linear data structure that follows First-In-First-Out (FIFO) order​
+# geeksforgeeks.org
+# . Items are added at the tail (enqueue) and removed from the head (dequeue). Queues model situations like customer service lines or data buffers. In Python, you can use collections.deque for an efficient queue: append() to enqueue and popleft() to dequeue in O(1) time. (Using a list and doing pop(0) to dequeue is easy but takes O(n) because it shifts elements.) Queues are vital in algorithms like breadth-first search (BFS) and scheduling tasks.
+# When to use: Any scenario needing FIFO order: BFS, scheduling, buffers (e.g., print queue, IO buffering), level-order tree traversal.
+# Time complexity:
+# Enqueue/Dequeue with deque: O(1) for both.
+# With Python list: enqueue at end is amortized O(1), but dequeue (pop from front) is O(n).
+# Space: O(n).

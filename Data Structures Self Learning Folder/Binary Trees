@@ -1,0 +1,41 @@
+# Simple binary search tree (BST) example
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+# Construct a BST
+root = TreeNode(10)
+root.left = TreeNode(5) # type: ignore
+root.right = TreeNode(15) # type: ignore
+root.left.left = TreeNode(3) # type: ignore
+
+# Search function for BST
+def bst_search(node, target):
+    if not node or node.val == target:
+        return node
+    if target < node.val:
+        return bst_search(node.left, target)
+    else:
+        return bst_search(node.right, target)
+
+result = bst_search(root, 5)
+print(result.val if result else "Not found")  # outputs 5
+
+# A binary tree is a hierarchical data structure in which each node has at most two children, known as the left and right child​
+# geeksforgeeks.org
+# . Binary trees model hierarchical relationships (like file systems, organizational charts, expression trees, etc.). A special type, the binary search tree (BST), keeps left-descendants smaller than the node and right-descendants larger. This property lets you search for values by descending the tree. In a balanced BST, search/insert/delete take O(log n) time on average (because the tree height is log n). However, in the worst case (e.g., a completely skewed tree), these operations degrade to O(n)​
+# geeksforgeeks.org
+# . Operations common to all binary trees (not just BSTs) like search or insertion typically require O(n) in the worst case because you may have to visit most nodes​
+# geeksforgeeks.org
+# . Binary trees are also implemented implicitly as arrays (heap) or explicitly with node pointers.
+# When to use: Hierarchical data; binary search trees for sorted data allowing logarithmic search/insertion (if balanced). Heaps (a special binary tree) for priority queues. Expression evaluation (parse trees), game trees, etc.
+# Time complexity:
+# Binary tree (general): Search/insert/delete worst-case O(n)​
+# geeksforgeeks.org
+# .
+# BST (balanced): Average-case O(log n), but worst-case O(n)​
+# geeksforgeeks.org
+# .
+# Space: O(n) for storing n nodes.

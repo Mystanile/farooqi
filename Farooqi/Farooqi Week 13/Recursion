@@ -1,0 +1,14 @@
+def walk(steps):
+    if steps == 0:
+        return
+    walk(steps - 1)
+    print(f"You take step # {steps}")
+
+
+walk(100)
+
+# this works by calling the function walk with the number of steps as an argument.
+# it checks if the number of steps is 0, if so it returns and stops the recursion.
+# if not, it calls itself with the number of steps - 1 and prints the current step.
+# this continues until the base case is reached, at which point the function returns and the program ends.
+#The reason it goes from 1 to 100

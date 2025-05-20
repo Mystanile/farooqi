@@ -1,0 +1,153 @@
+# Name of Student: Mohammad Khalil
+# Date of Assignment: May 3, 2025
+# Name of Assignment: Hospital Management System Assignment
+
+# Data storage
+patients = [] 
+doctors = []
+appointments = []
+billing_records = []
+
+# Functions for patient management
+def add_patient():
+    name = input("Enter patient name: ")
+    while True:
+        try:
+            age= int(input("Enter patient age: "))
+            break
+        except ValueError:
+            print("Invalid input for age. Please enter a number.")
+    gender = input("Enter patient gender: ")
+    ailment = input("Enter patient illness/complaint: ")
+    doctor_assigned = input("Enter doctor assigned: ")
+    patients.append({
+        "name": name,
+        "age": age,
+        "gender": gender,
+        "ailment": ailment,
+        "doctor_assigned": doctor_assigned
+    })
+    print(f"Patient {name} has been added to the system! Their patient ID is {len(patients)} ")
+
+def view_patients():
+    if not patients:
+        print("No patients found.")
+    else:
+        for i, patient in enumerate(patients, 1):
+            print(f"{i}. {patient}")
+
+def update_patient():
+    view_patients()
+    index = int(input("Enter the patient ID to update: ")) - 1
+    if 0 <= index < len(patients):
+        patients[index]["name"] = input("Enter new name: ")
+        patients[index]["age"] = int(input("Enter new age: "))
+        patients[index]["gender"] = input("Enter new gender: ")
+        patients[index]["ailment"] = input("Enter new ailment: ")
+        patients[index]["doctor_assigned"] = input("Enter new doctor assigned: ")
+        print("Patient updated successfully!")
+    else:
+        print("Invalid patient number.")
+
+# Functions for doctor management
+def add_doctor():
+    name = input("Enter doctor name: ")
+    specialty = input("Enter doctor specialty: ")
+    availability = input("Enter doctor availability: ")
+    doctors.append({
+        "name": name,
+        "specialty": specialty,
+        "availability": availability
+    })
+    print("Doctor added successfully!")
+
+def view_doctors():
+    if not doctors:
+        print("No doctors found.")
+    else:
+        for i, doctor in enumerate(doctors, 1):
+            print(f"{i}. {doctor}")
+
+# Functions for appointment management
+def schedule_appointment():
+    patient_name = input("Enter patient name: ")
+    doctor_name = input("Enter doctor name: ")
+    date = input("Enter appointment date: ")
+    time = input("Enter appointment time: ")
+    appointments.append({
+        "patient_name": patient_name,
+        "doctor_name": doctor_name,
+        "date": date,
+        "time": time
+    })
+    print("Appointment scheduled successfully!")
+
+def view_appointments():
+    if not appointments:
+        print("No appointments found.")
+    else:
+        for i, appointment in enumerate(appointments, 1):
+            print(f"{i}. {appointment}")
+
+# Functions for billing
+def generate_bill():
+    patient_name = input("Enter patient name: ")
+    services = input("Enter services availed (comma-separated): ").split(",")
+    costs = list(map(float, input("Enter costs for each service (comma-separated): ").split(",")))
+    total_cost = sum(costs)
+    billing_records.append({
+        "patient_name": patient_name,
+        "services": services,
+        "costs": costs,
+        "total_cost": total_cost
+    })
+    print(f"Bill generated successfully! Total cost: ${total_cost:.2f}")
+
+def view_bills():
+    if not billing_records:
+        print("No billing records found.")
+    else:
+        for i, bill in enumerate(billing_records, 1):
+            print(f"{i}. {bill}")
+
+# Main menu
+def main_menu():
+    while True:
+        print("\nHospital Management System")
+        print("1. Add Patient")
+        print("2. View Patients")
+        print("3. Update Patient")
+        print("4. Add Doctor")
+        print("5. View Doctors")
+        print("6. Schedule Appointment")
+        print("7. View Appointments")
+        print("8. Generate Bill")
+        print("9. View Bills")
+        print("10. Exit")
+        choice = input("Enter your choice: ")
+        if choice == "1":
+            add_patient()
+        elif choice == "2":
+            view_patients()
+        elif choice == "3":
+            update_patient()
+        elif choice == "4":
+            add_doctor()
+        elif choice == "5":
+            view_doctors()
+        elif choice == "6":
+            schedule_appointment()
+        elif choice == "7":
+            view_appointments()
+        elif choice == "8":
+            generate_bill()
+        elif choice == "9":
+            view_bills()
+        elif choice == "10":
+            print("Exiting the system. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+
+main_menu()

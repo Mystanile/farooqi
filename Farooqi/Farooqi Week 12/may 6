@@ -1,0 +1,45 @@
+import turtle
+
+t = turtle.Turtle()
+
+# for i in range(2):
+#     t.forward(-150)
+#     t.right(90)
+#     t.forward(-100)
+#     t.right(90)
+
+# turtle.done()
+
+# turtle.circle(100,54) #draws a circle with radius 100 and angle 54 degrees
+
+# t.penup() 
+# t.goto(0,0)
+# t.pendown()
+
+# t.setheading(0)
+# t.forward(150)
+
+# t.setheading(270)
+# t.forward(100)
+
+# t.setheading(180)
+# t.forward(150)
+
+# t.setheading(90)
+# t.forward(100)
+
+# turtle.done()
+
+x = ["red", "blue", "green"]
+
+for i in range(3):
+    t.penup()
+    t.fillcolor(x[i])
+    t.begin_fill()
+    t.goto(0,i*25)
+    t.pendown()
+    t.circle(100 - i*25)
+    t.end_fill()
+
+turtle.end_fill()
+turtle.done()

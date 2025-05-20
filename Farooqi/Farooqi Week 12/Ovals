@@ -1,0 +1,14 @@
+import turtle
+
+t = turtle.Turtle()
+
+t.pensize(2)
+t.color("blue")
+t.setheading(45)
+
+def draw_oval():
+    for i in range(2):
+        t.circle(25, 90)
+        t.circle(100, 90)
+draw_oval()
+turtle.done()

@@ -1,0 +1,22 @@
+#Mark Calculator
+mark1 = int(input("Enter the first mark: "))
+mark2 = int(input("Enter the second mark: "))
+mark3 = int(input("Enter the third mark: "))
+mark4 = int(input("Enter the fourth mark: "))
+mark5 = int(input("Enter the fifth mark: "))
+markList = [mark1, mark2, mark3, mark4, mark5]
+#print
+print(markList)
+#average
+avg = sum(markList) / len(markList)
+#letter grade
+if avg >= 90:
+    print(f"Your average is {avg} and your letter grade is an A.")
+elif avg >= 80:
+    print(f"Your average is {avg} and your letter grade is a B.")
+elif avg >= 70:
+    print(f"Your average is {avg} and your letter grade is a C.")
+elif avg >= 60:
+    print(f"Your average is {avg} and your letter grade is a D.")
+else:
+    print(f"Your average is {avg} and your letter grade is an F.")

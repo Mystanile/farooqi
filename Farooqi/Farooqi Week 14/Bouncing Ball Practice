@@ -1,0 +1,58 @@
+import pygame
+import sys
+import os
+
+# Initialize Pygame
+pygame.init()
+# Set screen size
+width = 600
+height = 400
+screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption("Bouncing Ball")
+# Set clock
+clock = pygame.time.Clock()
+# Ball properties
+x = 100
+y = 100
+radius = 20
+color = (255, 0, 0)
+speed_x = 4
+speed_y = 3
+
+# Load the ball image ONCE before the loop
+ball_image_path = r"C:\Users\Mohammad Khalil\Desktop\farooqi\Farooqi\ball.png"
+if not os.path.exists(ball_image_path):
+    print("Image not found:", ball_image_path)
+    sys.exit()
+ball_image = pygame.image.load(ball_image_path)
+
+# Scale the image to match the ball's diameter
+ball_image = pygame.transform.scale(ball_image, (radius * 2, radius * 2))
+
+ball_rect = ball_image.get_rect(center=(x, y))
+
+# Main loop
+running = True
+while running:
+    screen.fill((255, 255, 255)) # White background
+    # Event handling
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    # Update ball position
+    x = x + speed_x
+    y = y + speed_y
+    # Bounce off walls
+    if x - radius < 0 or x + radius > width:
+        speed_x = -speed_x
+    if y - radius < 0 or y + radius > height:
+        speed_y = -speed_y
+    # Update image position
+    ball_rect.center = (x, y)
+    # Draw the ball image
+    screen.blit(ball_image, ball_rect)
+    # Refresh the screen
+    pygame.display.flip()
+    clock.tick(60)
+pygame.quit()
+sys.exit()

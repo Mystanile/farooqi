@@ -1,0 +1,111 @@
+# Name of Student: Mohammad Khalil
+# Date of Assignment: April 30, 2025
+# Name of Assignment: Data Structures
+
+
+#1. Lists
+students = ['Alice', 'Bob', 'Charlie'] # List of students
+students.append('Diana') # Adding a new student
+students.remove('Bob') # Removing a student
+students.sort() # Sorting the list of students by name (alphabetically)
+for student in students:
+    print(f"Student: {student}") # Displaying the updated list of students
+
+students = ['Alice', 'Bob', 'Charlie'] # List of students
+students.pop(1) # Removing the student at index 1 (Bob)
+print(students) # Displaying the updated list of students
+students.insert(1, 'David') # Inserting a new student at index 1
+students.append
+
+fruits = ['apple', 'banana', 'cherry'] # List of fruits
+fruits.append('orange') # Adding a new fruit
+print(fruits) # Displaying the updated list of fruits
+
+#2. Tuples
+point = (10,20)
+print(point[0])
+
+point2 = (5, 10, 15) # Tuple with three elements
+x, y, z = point2 # Unpacking the tuple into variables
+print(f"x: {x}, y: {y}, z: {z}") # Unpacking the tuple into variables
+
+#3. Sets
+unique_numbers = {1,2,3,2}
+print(unique_numbers)
+
+sentence = "this is a test this is only a test" # Example sentence
+words = sentence.split() # Splitting the sentence into words
+unique_words = set(words) # Creating a set of unique words (removing duplicates)
+print("Unique words:", unique_words) # Displaying the unique words
+
+#Set operations
+other_words = {'test', 'only', 'example'} # Another set of words
+print("Common:", unique_words & other_words) # Intersection of sets (common words)
+print("Difference:", unique_words - other_words) # type: ignore # Difference of sets (words in unique_words but not in other_words)
+
+
+#4. Dictionaries/hashmaps
+person = {'name': 'Alice', 'age':30}
+print(person['name']) #Alice
+
+address_book = {
+    'Alice': '123 Maple St',
+    'Bob': '456 Oak St',
+}
+
+#Add a new contact
+address_book['Charlie'] = '789 Pine St'
+
+#Update a contact
+address_book['Bob'] = '000 New Address'
+
+#Iterate over dictionary
+for name, address in address_book.items():
+    print(f"{name} lives at {address}")
+
+#5. Stacks
+
+stack = [] # Initialize an empty stack
+#Push items
+stack.append(1) # Push item onto the stack
+stack.append(2) # Push another item onto the stack
+stack.append(3) # Push another item onto the stack
+print("Stack after pushing:", stack) # Display the stack after pushing items
+#Pop items
+top_item = stack.pop() # Pop the top item from the stack
+print("Popped item:", top_item) # Display the popped item
+print("Stack after popping:", stack) # Display the stack after popping an item
+
+
+
+#6. Queues
+from collections import deque
+d = deque([1, 2, 3])
+d.append(4)
+d.appendleft(0)
+print(d)
+
+d.pop
+d.popleft()
+print(d)
+
+#7. Linked Lists
+class Node: # Node class for linked list
+    def __init__(self, data): # Constructor to initialize the node with data
+        self.data = data # Assigning data to the node
+        self.next = None # Pointer to the next node (initially None)
+
+#8. Deques
+from collections import deque # Importing deque from collections module
+d = deque() # Initializing an empty deque
+# Adding elements to the deque
+d.append(1) # Adding an element to the right end of the deque
+d.append(2) # Adding another element to the right end of the deque
+d.appendleft(0) # Adding an element to the left end of the deque
+d.appendleft(3) # Adding another element to the right end of the deque
+print("Deque after adding elements:", d) # Displaying the deque after adding elements
+# Removing elements from the deque
+d.pop() # Removing an element from the right end of the deque
+d.popleft() # Removing an element from the left end of the deque
+# Displaying the deque after operations
+print("Deque after operations:", d) # Displaying the deque after adding and removing elements

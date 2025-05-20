@@ -1,0 +1,49 @@
+# Simple singly linked list example
+class Node: # Node class for linked list
+    def __init__(self, data): # Constructor to initialize the node with data
+        self.data = data # Assigning data to the node
+        self.next = None # Pointer to the next node (initially None)
+
+# Build linked list: 1 -> 2 -> 3 -> None
+head = Node(1) # Create head node with value 1
+head.next = Node(2) # type: ignore # Create second node with value 2
+head.next.next = Node(3) # type: ignore # Create third node with value 3
+
+# Traverse and print all elements
+current = head # Start from head
+while current: # While current node is not None
+    print(current.data, end=" -> ") # Print current node's data
+    current = current.next # Move to next node
+print("None")  # Output: 1 -> 2 -> 3 -> None 
+
+# Insert a new node at the head (value 0): 0 -> 1 -> 2 -> 3
+new_node = Node(0) # Create new node with value 0
+new_node.next = head # type: ignore # Point new node's next to current head
+head = new_node # Update head to new node
+
+# Print again: 0 -> 1 -> 2 -> 3 -> None
+current = head # Start from new head
+while current: # While current node is not None
+    print(current.data, end=" -> ") # Print current node's data
+    current = current.next # Move to next node
+print("None") # Output: 0 -> 1 -> 2 -> 3 -> None
+
+
+
+# A linked list is a linear collection of nodes where each node contains data and a reference (pointer) to the next node​
+# geeksforgeeks.org
+# . In a singly linked list, each node points to the next node, and the last node points to None. Because nodes are not stored contiguously, inserting or deleting a node (when you have its neighbor) can be done in constant time. Linked lists excel when your program needs to frequently insert or remove items from arbitrary positions and you don’t need random access by index. For example, inserting at the head of a linked list is O(1)​
+# geeksforgeeks.org
+# . However, searching for a value or accessing the k-th element requires traversing from the head, giving O(n) time​
+# geeksforgeeks.org
+# . In practice, Python does not have a built-in linked list, but you can implement one with a node class.
+# When to use: Good for applications with many insertions/deletions (especially at the head) and where random access is not needed. Used to implement other structures like stacks, queues, or deques.
+# Time complexity:
+# Search/Access: O(n) (must traverse nodes).
+# Insert/Delete at head: O(1)​
+# geeksforgeeks.org
+#  (simply change a pointer).
+# Insert/Delete at tail: O(n) if you must walk to the end​
+# geeksforgeeks.org
+#  (unless you maintain a tail pointer).
+# Space: O(n) total (each element has overhead for the pointer).

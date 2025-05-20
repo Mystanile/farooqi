@@ -1,0 +1,30 @@
+import turtle
+import time
+
+screen = turtle.Screen()
+screen.bgcolor("black")
+
+spinner = turtle.Turtle()
+spinner.shape("turtle")
+spinner.color("cyan")
+spinner.speed(1)
+
+angle = 0
+speed = 1
+while True:
+    spinner.forward(100)
+    spinner.right(90)
+    spinner.forward(100)
+    spinner.right(90)
+    spinner.forward(100)
+    spinner.right(90)
+    spinner.forward(100)
+    spinner.right(90)
+
+    speed += 1
+    spinner.speed(speed)
+    angle += 10
+    spinner.right(angle)
+    time.sleep(0.1)
+    spinner.clear()
+    

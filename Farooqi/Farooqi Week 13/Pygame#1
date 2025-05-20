@@ -1,0 +1,33 @@
+import pygame 
+pygame.init()
+
+screen = pygame.display.set_mode((400, 300), pygame.RESIZABLE)
+pygame.display.set_caption("---------------")
+
+x,y = 200, 150
+width, height = 50, 50
+k = 5 #velocity
+run = True
+while run:
+    pygame.time.delay(30)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                x -= k
+            if event.key == pygame.K_RIGHT:
+                x += k
+            if event.key == pygame.K_UP:
+                y -= k
+            if event.key == pygame.K_DOWN:
+                y += k
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.VIDEORESIZE: 
+            print("Window resized")
+            screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
+pygame.quit()

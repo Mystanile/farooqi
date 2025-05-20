@@ -1,0 +1,13 @@
+# Program author: Mohammad
+# Date: March 7, 2025
+# Program Name: square.py
+# ICS3U Period 1
+
+while True:
+    num = int(input("Enter a number to square: "))
+    print(f"The square of {num} is {num**2}")
+
+    choice = input("Do you want to continue? (y/n): ").strip().lower()
+    if choice != 'y' and choice != 'yes':
+        print("Program terminated")
+        break

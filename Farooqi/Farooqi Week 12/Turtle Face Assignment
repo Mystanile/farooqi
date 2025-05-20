@@ -1,0 +1,162 @@
+import turtle
+
+t = turtle.Turtle()
+
+#pink oval
+import math
+
+t = turtle.Turtle()
+t.pensize(2)
+t.color("fuchsia", "fuchsia") 
+a = 300  
+b = 100  
+center_x = 0
+center_y = 215
+
+t.penup()
+t.goto(center_x + a * math.cos(0), center_y + b * math.sin(0))
+t.pendown()
+t.begin_fill()
+
+for angle in range(361): 
+    x = center_x + a * math.cos(math.radians(angle))
+    y = center_y + b * math.sin(math.radians(angle))
+    t.goto(x, y)
+
+t.end_fill()
+
+#yellow circle
+t.setheading(0)
+t.fillcolor("yellow")
+t.color("yellow")
+t.penup()
+t.goto(0, -300)
+t.pendown()
+t.begin_fill()
+t.circle(300)
+t.end_fill()
+
+#blue mouth
+t.color("blue")
+t.penup()
+t.pensize(3)
+t.goto(0,-225)
+t.setheading(30)
+t.pendown()
+t.forward(200)
+t.penup()
+t.goto(0,-225)
+t.setheading(150)
+t.pendown()
+t.forward(200)
+t.penup()
+
+#red nose
+t.goto(0,-100)
+t.color("red")
+t.setheading(0)
+t.pendown()
+t.forward(75)
+t.goto(0,-5)
+t.penup()
+
+#white eyes 
+t.goto(-50,-25)
+#draw an oval left eye
+t.fillcolor("white")
+t.color("white")
+t.pendown()
+t.begin_fill()
+t.left(45)
+for i in range(2):
+    t.circle(100,90)
+    t.circle(50,90)
+t.end_fill()
+t.penup()
+t.goto(125,-25)
+t.pendown()
+t.begin_fill()
+for i in range(2):
+    t.circle(100,90)
+    t.circle(50,90)
+t.end_fill()
+t.penup()
+
+#black pupils
+
+t.goto(-40,-20)
+t.fillcolor("black")
+t.color("black")
+t.pendown()
+t.begin_fill()
+t.circle(40)
+t.end_fill()
+t.penup()
+t.goto(135,-20)
+t.pendown()
+t.begin_fill()
+t.circle(40)
+t.end_fill()
+t.penup()
+
+#eyebrows
+
+t.goto(-130, 160)
+t.fillcolor("brown")
+t.color("brown")
+t.pendown()
+t.setheading(0)
+t.begin_fill()
+for i in range(2):
+    t.forward(100)
+    t.right(90)
+    t.forward(15)
+    t.right(90)
+t.end_fill()
+t.penup()
+
+t.goto(45, 160)
+t.fillcolor("brown")
+t.color("brown")
+t.pendown()
+t.setheading(0)
+t.begin_fill()
+for i in range(2):
+    t.forward(100)
+    t.right(90)
+    t.forward(15)
+    t.right(90)
+t.end_fill()
+t.penup()
+
+#green square ears???
+t.goto(260, 60)
+t.fillcolor("lightgreen")
+t.color("lightgreen")
+t.pendown()
+t.setheading(0)
+t.begin_fill()
+for i in range(2):
+    t.forward(100)
+    t.right(-90)
+    t.forward(75)
+    t.right(-90)
+t.end_fill()
+t.penup()
+
+t.goto(-250, 60)
+t.fillcolor("lightgreen")
+t.color("lightgreen")
+t.pendown()
+t.setheading(180)
+t.begin_fill()
+for i in range(2):
+    t.forward(100)
+    t.right(90)
+    t.forward(75)
+    t.right(90)
+t.end_fill()
+t.penup()
+
+t.hideturtle()
+turtle.done()

@@ -1,0 +1,111 @@
+import pygame
+import sys
+import os
+import random
+
+# Initialize Pygame
+pygame.init()
+pygame.mixer.init()
+
+# Set screen size
+width = 600
+height = 400
+screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption("Bouncing Ball Extended")
+
+# Set clock
+clock = pygame.time.Clock()
+
+# Sound 
+def play_bounce_sound():
+    duration = 100  # milliseconds
+    freq = 440  # Hz
+    try:
+        import winsound
+        winsound.Beep(freq, duration)
+    except ImportError:
+        pass  # On non-Windows, skip sound
+
+# Ball class
+class Ball:
+    def __init__(self, x, y, radius, color, speed_x, speed_y, image_path=None):
+        self.x = x
+        self.y = y
+        self.radius = radius
+        self.color = color
+        self.speed_x = speed_x
+        self.speed_y = speed_y
+        self.image = None
+        if image_path and os.path.exists(image_path):
+            img = pygame.image.load(image_path)
+            self.image = pygame.transform.scale(img, (radius * 2, radius * 2))
+        self.rect = pygame.Rect(x - radius, y - radius, radius * 2, radius * 2)
+
+    def move(self):
+        self.x += self.speed_x
+        self.y += self.speed_y
+        self.rect.center = (self.x, self.y)
+
+    def bounce(self, width, height):
+        bounced = False
+        if self.x - self.radius < 0 or self.x + self.radius > width:
+            self.speed_x = -self.speed_x
+            bounced = True
+        if self.y - self.radius < 0 or self.y + self.radius > height:
+            self.speed_y = -self.speed_y
+            bounced = True
+        return bounced
+
+    def draw(self, surface):
+        if self.image:
+            rect = self.image.get_rect(center=(self.x, self.y))
+            surface.blit(self.image, rect)
+        else:
+            pygame.draw.circle(surface, self.color, (int(self.x), int(self.y)), self.radius)
+
+# List of background colors
+bg_colors = [
+    (255, 255, 255), (200, 200, 255), (255, 200, 200), (200, 255, 200),
+    (255, 255, 200), (200, 255, 255), (255, 200, 255), (220, 220, 220)
+]
+bg_index = 0
+
+# Ball image path 
+ball_image_path = r"C:\Users\Mohammad Khalil\Desktop\farooqi\Farooqi\ball.png"
+
+# Create balls
+balls = [
+    # Image ball
+    Ball(x=100, y=100, radius=30, color=(0, 128, 255), speed_x=5, speed_y=4, image_path=ball_image_path),
+    # Other random balls
+    Ball(x=200, y=150, radius=20, color=(255, 0, 0), speed_x=3, speed_y=2),
+    Ball(x=300, y=200, radius=25, color=(0, 255, 0), speed_x=-4, speed_y=3),
+    Ball(x=400, y=100, radius=15, color=(255, 255, 0), speed_x=2, speed_y=-3),
+]
+# Main loop
+running = True
+while running:
+    screen.fill(bg_colors[bg_index])
+    # Draw your name
+    font = pygame.font.SysFont("comic sans ms", 24, bold=True)
+    name_surface = font.render("Mohammad Khalil", True, (0, 0, 0))
+    screen.blit(name_surface, (10, 10))
+
+    # Event handling
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Move and draw balls
+    for ball in balls:
+        ball.move()
+        if ball.bounce(width, height):
+            bg_index = (bg_index + 1) % len(bg_colors)
+            play_bounce_sound()
+        ball.draw(screen)
+
+    pygame.display.flip()
+    clock.tick(60)
+
+pygame.quit()
+sys.exit()

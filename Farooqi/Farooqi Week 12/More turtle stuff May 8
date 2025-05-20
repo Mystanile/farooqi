@@ -1,0 +1,29 @@
+import turtle
+t = turtle.Turtle()
+
+# t.speed(100)
+# colors = ['red', 'blue', 'green', 'purple']
+
+# for i in range (50):
+#     t.pencolor(colors[i%len(colors)])
+#     t.forward(i*4)
+#     t.left(90)
+
+# turtle.done()
+
+
+
+# t.speed(3)
+# t.color('black')
+
+# def drawpetals():
+#     for i in range(10):
+#         t.circle(150, 60)
+#         t.left(120)
+#         t.circle(150, 60)
+#         t.left(10)
+
+# drawpetals()
+# t.hideturtle()
+# turtle.done()
+

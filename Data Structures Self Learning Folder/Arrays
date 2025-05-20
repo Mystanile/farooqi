@@ -1,0 +1,32 @@
+# Python list (array) example
+nums = [1, 2, 3]          # Create a list of 3 elements
+print(nums[0])            # Access first element (O(1)): outputs 1
+nums.append(4)            # Append at end (O(1) amortized): [1, 2, 3, 4]
+print(nums)
+nums.pop(1)               # Remove element at index 1 (O(n) shift needed)
+print(nums)               # Now [1, 3, 4]
+
+
+
+# An array (or list in Python) is a simple collection of elements stored in contiguous memory locations. 
+# In Python, the built-in list type is a dynamic array: it can grow or shrink and stores its items in a contiguous block. 
+# This means you can access any element by index in constant time. For example, nums = [5, 3, 8, 2] stores four numbers; retrieving nums[2] gives 8 in O(1) time​
+# geeksforgeeks.org
+# . Arrays are used when you want to store an ordered sequence of items and perform lots of random-access reads or appends at the end. 
+# They are great for tasks like keeping a list of values, implementing stacks or queues, and iterating over elements. 
+# However, inserting or removing an element in the middle of an array requires shifting subsequent items, which takes O(n) time​
+# geeksforgeeks.org
+# .
+# When to use: Good for ordered data, frequent indexing, appending at end, and iteration.
+# Time complexity (using Python list):
+# Access by index: O(1)​
+# geeksforgeeks.org
+# .
+# Append at end: Amortized O(1)​
+# geeksforgeeks.org
+#  (occasional resizing).
+# Insert/Delete in middle: O(n)​
+# geeksforgeeks.org
+#  (needs shifting).
+# Search (in): O(n) (linear scan).
+# Space complexity: O(n), where n is the number of elements (plus occasional extra space for resizing).

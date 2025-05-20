@@ -1,0 +1,54 @@
+#x = int(input("Enter number of rows: "))
+#for i in range(x):
+#    print("* " * x)
+
+#y = int(input("Enter number of rows: "))
+#for i in range(y):
+#    print((str(y) + " ") * y)
+
+
+
+#z = int(input("Enter number of rows: "))
+#for i in range(z):
+#    print((str(i+1) + " ") * z)
+
+
+#a = int(input("Enter number of rows: "))
+#for i in range(a):
+#    print((chr(65+i) + " ") * (i+1))
+
+
+#n = int(input("Enter number of rows: "))
+#for i in range(n):
+#    print("* " * (n-i))
+
+#n = int(input("Enter number of rows: "))
+#for i in range(n):
+#    for j in range(n-i): # this loop will print the j number increasing from 1 to n-i 
+#        print(j+1, end=" ")
+#    print()
+
+
+#n = int(input("Enter number of rows: "))
+#for i in range(n):
+#    print("* " * (i+1))
+
+
+# 5 rows
+#            1
+#           2 2
+#          3 3 3
+#         4 4 4 4
+#        5 5 5 5 5
+
+n = int(input("Enter number of rows: "))
+for i in range(n):
+    print(" " * (n-i-1), end="")
+    for j in range(i+1):
+        print(i+1, end=" ")
+    print()
+
+
+n = int(input("Enter number of rows: "))
+for i in range(n):
+    print(" "*(n-1-i)+(str(i+1)+" ")*(i+1))

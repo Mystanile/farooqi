@@ -1,0 +1,142 @@
+# Name of Student: Mohammad Khalil
+# Date of Assignment: May 12, 2025
+# Name of Assignment: Blinking Name Animation Assignment
+
+import turtle
+import math
+
+turtle.speed(100)
+turtle.pensize(5)
+
+def M(x,y):
+    turtle.penup()
+    turtle.setheading(0)
+    turtle.goto(x,y) 
+    turtle.pendown()
+    turtle.left(90)
+    turtle.forward(100)
+    turtle.right(150)
+    turtle.forward(100)
+    turtle.left(120)
+    turtle.forward(100)
+    turtle.right(150)
+    turtle.forward(100)
+
+def O(x,y):
+    turtle.penup()
+    turtle.goto(x,y) 
+    turtle.pendown()
+    turtle.circle(50)
+
+def H(x,y):
+    turtle.penup()
+    turtle.goto(x,y)
+    turtle.pendown()
+    turtle.setheading(90)
+    turtle.forward(50)
+    turtle.right(90)
+    turtle.forward(50)
+    turtle.right(90)
+    turtle.forward(50)
+    turtle.right(180)
+    turtle.forward(100)
+    turtle.right(180)
+    turtle.forward(50)
+    turtle.right(90)
+    turtle.forward(50)
+    turtle.right(90)
+    turtle.forward(50)
+
+def A(x,y):
+    turtle.penup()
+    turtle.goto(x,y)
+    turtle.pendown()
+    turtle.setheading(75)
+    turtle.forward(100)
+    turtle.right(150)
+    turtle.forward(100)
+    turtle.right(180)
+    turtle.forward(50)
+    turtle.setheading(180)
+    turtle.forward(26)
+ 
+def D(x,y):
+    turtle.penup()
+    turtle.goto(x,y)
+    turtle.pendown()
+    turtle.setheading(90)
+    turtle.forward(100)
+    turtle.goto(x, y)
+    turtle.right(90)
+    turtle.circle(50, 180)
+    turtle.right(90)
+
+def K(x,y):
+    turtle.penup()
+    turtle.goto(x,y)
+    turtle.pendown()
+    turtle.setheading(90)
+    turtle.forward(100)
+    turtle.goto(x, y+50) 
+    turtle.setheading(45)
+    turtle.forward(math.sqrt(2) * 50)
+    turtle.goto(x, y+50)
+    turtle.setheading(315)
+    turtle.forward(math.sqrt(2) * 50)
+
+def L(x,y):
+    turtle.penup()
+    turtle.goto(x,y) 
+    turtle.pendown()
+    turtle.setheading(90)
+    turtle.forward(100)
+    turtle.goto(x,y)
+    turtle.right(90)
+    turtle.forward(50)
+
+def I(x,y):
+    turtle.penup()
+    turtle.goto(x,y) 
+    turtle.pendown()
+    turtle.setheading(90)
+    turtle.forward(100)
+    turtle.goto(x,y)
+
+import random
+def random_color():
+    return random.random(), random.random(), random.random() 
+
+def blink(name,x,y):
+    turtle.color(random_color())
+    name(x,y)
+
+M(-400, 100)
+O(-270, 150)
+H(-150, 100)
+A(-70, 100)
+M(20, 100)
+M(160, 100)
+A(290, 100)
+D(360, 100)
+K(-400, -50)
+H(-310, -50)
+A(-220, -50)
+L(-150, -50)
+I(-80, -50)
+L(-60, -50)
+
+while True:
+    blink(M, -400, 100)
+    blink(O, -270, 150)
+    blink(H, -150, 100)
+    blink(A, -70, 100)
+    blink(M, 20, 100)
+    blink(M, 160, 100)
+    blink(A, 290, 100)
+    blink(D, 360, 100)
+    blink(K, -400, -50)
+    blink(H, -310, -50)
+    blink(A, -220, -50)
+    blink(L, -150, -50)
+    blink(I, -80, -50)
+    blink(L, -60, -50)

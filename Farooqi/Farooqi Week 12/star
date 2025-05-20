@@ -1,0 +1,45 @@
+import turtle
+import math
+
+# Setup
+screen = turtle.Screen()
+screen.bgcolor("white")
+t = turtle.Turtle()
+t.speed(0)
+
+# 5 colors for the 5 triangles
+colors = ["red", "blue", "green", "orange", "purple"]
+
+# Smaller star
+outer_radius = 100
+# Make triangles more pointy by reducing inner radius multiplier
+inner_radius = outer_radius * 0.35  # Smaller = sharper points
+
+# Compute 10 points: outer and inner alternating
+points = []
+for i in range(10):
+    angle_deg = 90 + i * 36  # Start at top
+    radius = outer_radius if i % 2 == 0 else inner_radius
+    angle_rad = math.radians(angle_deg)
+    x = radius * math.cos(angle_rad)
+    y = radius * math.sin(angle_rad)
+    points.append((x, y))
+
+# Draw 5 sharp, outward-pointing triangles
+for i in range(0, 10, 2):
+    tip = points[i]                # outer tip
+    left_base = points[(i - 1) % 10]  # inner left
+    right_base = points[(i + 1) % 10] # inner right
+
+    t.fillcolor(colors[i // 2])
+    t.begin_fill()
+    t.penup()
+    t.goto(left_base)
+    t.pendown()
+    t.goto(tip)
+    t.goto(right_base)
+    t.goto(left_base)
+    t.end_fill()
+
+t.hideturtle()
+screen.mainloop()

@@ -1,0 +1,120 @@
+from turtle import *  # type: ignore
+from random import *  # type: ignore
+import turtle
+import time
+
+# screen setup
+setup(800, 500)
+title('Turtle Race')
+bgcolor('forestgreen')
+speed(0)
+
+# heading
+penup()
+goto(-100, 205)
+color('white')
+write('TURTLE RACE', font=('Arial', 20, 'bold'))
+
+# dirt
+goto(-350, 200)
+pendown()
+color('chocolate')
+begin_fill()
+for i in range(2):
+    forward(700)
+    right(90)
+    forward(400)
+    right(90)
+end_fill()
+
+# finish line
+gap_size = 20
+shape('square')
+penup()
+
+# white squares column 1
+color('white')
+for i in range(10):
+    goto(250, (170 - (i * gap_size * 2)))
+    stamp()  # stamp() means to draw the shape at the current position
+# white squares column 2
+for i in range(10):
+    goto(251 + gap_size, (190 - (i * gap_size * 2)))
+    stamp()
+
+# black squares column 1
+color('black')
+for i in range(10):
+    goto(250, (190 - (i * gap_size * 2)))
+    stamp()
+
+# black squares column 2
+for i in range(10):
+    goto(251 + gap_size, ((190 - gap_size) - (i * gap_size * 2)))
+    stamp()
+
+# Ask user for turtle names
+green_name = input("Enter a name for the green turtle: ")
+red_name = input("Enter a name for the red turtle: ")
+blue_name = input("Enter a name for the blue turtle: ")
+yellow_name = input("Enter a name for the yellow turtle: ")
+
+green_nametag = Turtle()
+red_nametag = Turtle()
+blue_nametag = Turtle()
+yellow_nametag = Turtle()
+
+def createTurtle(color, shape, size, x, y, nametag, name):
+    turtle = Turtle()
+    turtle.color(color)
+    turtle.shape(shape)
+    turtle.shapesize(size)
+    turtle.penup()
+    turtle.goto(x, y)
+    nametag.penup()
+    nametag.goto(x, y + 30)
+    nametag.color('white')
+    nametag.write(name, align='center', font=('Arial', 10, 'bold'))
+    nametag.hideturtle()
+    return turtle
+# Create turtles
+green_turtle = createTurtle('green', 'turtle', 1.5, -300, 150, green_nametag, green_name)
+red_turtle = createTurtle('red', 'turtle', 1.5, -300, 50, red_nametag, red_name)
+blue_turtle = createTurtle('blue', 'turtle', 1.5, -300, -50, blue_nametag, blue_name)
+yellow_turtle = createTurtle('yellow', 'turtle', 1.5, -300, -150, yellow_nametag, yellow_name)
+
+def turtleRace(x,y,z):
+    x.forward(randint(1, 10))
+    z.clear()
+    z.penup()
+    z.goto(x.xcor(), x.ycor() + 30)
+    z.color('white')
+    z.write(y, align='center', font=('Arial', 10, 'bold'))
+    
+# Race logic
+while blue_turtle.xcor() < 250 and green_turtle.xcor() < 250 and red_turtle.xcor() < 250 and yellow_turtle.xcor() < 250:
+    turtleRace(green_turtle, green_name, green_nametag)
+    turtleRace(red_turtle, red_name, red_nametag)
+    turtleRace(blue_turtle, blue_name, blue_nametag)
+    turtleRace(yellow_turtle, yellow_name, yellow_nametag)
+
+#Winner check
+winner = turtle.Turtle()
+def check_winner(turtle, color, name):
+    if turtle.xcor() >= 250:
+        turtle.shapesize(3)
+        winner.penup()
+        winner.goto(0, 0)
+        winner.color('white')
+        winner.write(f'{name} ({color} turtle) wins!', align='center', font=('consolas', 20, 'bold'))
+        winner.hideturtle()
+        while True:
+            turtle.right(5)
+
+check_winner(green_turtle, 'Green', green_name)
+check_winner(red_turtle, 'Red', red_name)
+check_winner(blue_turtle, 'Blue', blue_name)
+check_winner(yellow_turtle, 'Yellow', yellow_name)
+
+time.sleep(1)
+turtle.done()

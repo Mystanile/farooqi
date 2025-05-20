@@ -1,0 +1,16 @@
+from turtle import * # type: ignore
+import random
+
+speed(0)
+bgcolor("black")
+
+for i in range(50):
+    color(random.random(), random.random(), random.random())
+    penup()
+    goto(random.randint(-300,300), random.randint(-300,300))
+    pendown()
+    begin_fill()
+    circle(random.randint(10,50))
+    end_fill()
+
+done()

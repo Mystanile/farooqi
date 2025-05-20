@@ -1,0 +1,122 @@
+import os
+
+# Name of Programmer: Mohammad Khalil
+# Date of Program: March 31, 2025
+# Name of Program: Contact List Assignment
+# Program Description: This program allows the user to manage a contact list. The user can add, update, remove, search for, and list contacts. Each contact has a name, phone number, email, and address.
+
+FILE_NAME = "contacts.txt"
+
+def load_contacts():
+    if os.path.exists(FILE_NAME):
+        with open(FILE_NAME, "r") as file:
+            contacts = []
+            for line in file:
+                name, phone, email, address = line.strip().split("|")
+                contacts.append({"name": name, "phone": phone, "email": email, "address": address})
+            return contacts
+    return []
+
+def save_contacts(contact_list):
+    with open(FILE_NAME, "w") as file:
+        for contact in contact_list:
+            file.write(f"{contact['name']}|{contact['phone']}|{contact['email']}|{contact['address']}\n")
+
+def display_menu():
+    print("\nContact List Menu:")
+    print("1. Add a New Contact")
+    print("2. Update Contact Information")
+    print("3. Remove a Contact")
+    print("4. Search for a Contact")
+    print("5. List All Contacts")
+    print("6. Exit")
+
+def add_contact(contact_list):
+    try:
+        name = input("Enter Name: ")
+        phone = input("Enter Phone Number: ")
+        email = input("Enter Email: ")
+        address = input("Enter Address: ")
+        contact_list.append({"name": name, "phone": phone, "email": email, "address": address})
+        save_contacts(contact_list)
+        print(f"Contact '{name}' added successfully.")
+    except Exception as e:
+        print(f"Error: {e}")
+
+def update_contact(contact_list):
+    try:
+        name = input("Enter the name of the contact to update: ")
+        for contact in contact_list:
+            if contact["name"] == name:
+                contact["phone"] = input("Enter new Phone Number (leave blank to keep current): ") or contact["phone"]
+                contact["email"] = input("Enter new Email (leave blank to keep current): ") or contact["email"]
+                contact["address"] = input("Enter new Address (leave blank to keep current): ") or contact["address"]
+                save_contacts(contact_list)
+                print(f"Contact '{name}' updated successfully.")
+                return
+        print("Contact not found.")
+    except Exception as e:
+        print(f"Error: {e}")
+
+def remove_contact(contact_list):
+    try:
+        name = input("Enter the name of the contact to remove: ")
+        for contact in contact_list:
+            if contact["name"] == name:
+                contact_list.remove(contact)
+                save_contacts(contact_list)
+                print(f"Contact '{name}' removed successfully.")
+                return
+        print("Contact not found.")
+    except Exception as e:
+        print(f"Error: {e}")
+
+def search_contact(contact_list):
+    try:
+        name = input("Enter the name of the contact to search: ")
+        for contact in contact_list:
+            if contact["name"] == name:
+                print(f"Contact Found: Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}, Address: {contact['address']}")
+                return
+        print("Contact not found.")
+    except Exception as e:
+        print(f"Error: {e}")
+
+def list_contacts(contact_list):
+    try:
+        if not contact_list:
+            print("No contacts available.")
+        else:
+            print("\nContact List:")
+            for contact in contact_list:
+                print(f"Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}, Address: {contact['address']}")
+    except Exception as e:
+        print(f"Error: {e}")
+
+def main():
+    contact_list = load_contacts()
+    while True:
+        display_menu()
+        try:
+            choice = int(input("Enter your choice: "))
+            if choice == 1:
+                add_contact(contact_list)
+            elif choice == 2:
+                update_contact(contact_list)
+            elif choice == 3:
+                remove_contact(contact_list)
+            elif choice == 4:
+                search_contact(contact_list)
+            elif choice == 5:
+                list_contacts(contact_list)
+            elif choice == 6:
+                print("Exiting program. Goodbye!")
+                break
+            else:
+                print("Invalid choice. Please try again.")
+        except ValueError:
+            print("Invalid input. Please enter a number between 1 and 6.")
+        except Exception as e:
+            print(f"Error: {e}")
+
+main()

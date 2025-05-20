@@ -1,0 +1,16 @@
+{
+    "files.defaultLanguage": "python",
+    "workbench.commandPalette.experimental.enableNaturalLanguageSearch": true,
+    "python.analysis.typeCheckingMode": "standard",
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    },
+    "python.testing.pytestArgs": [
+        "Farooqi Week 11"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}
