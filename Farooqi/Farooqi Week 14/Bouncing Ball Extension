@@ -1,10 +1,14 @@
+# Name of Student: Mohammad Khalil
+# Date of Assignment: May 20, 2025
+# Name of Assignment: Boucning Ball Extension
+
 import pygame
 import sys
 import os
 import random
 
 # Initialize Pygame
-pygame.init()
+pygame.init() 
 pygame.mixer.init()
 
 # Set screen size
@@ -86,7 +90,7 @@ balls = [
 running = True
 while running:
     screen.fill(bg_colors[bg_index])
-    # Draw your name
+    # Draw my name
     font = pygame.font.SysFont("comic sans ms", 24, bold=True)
     name_surface = font.render("Mohammad Khalil", True, (0, 0, 0))
     screen.blit(name_surface, (10, 10))
