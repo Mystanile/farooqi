@@ -1,27 +1,64 @@
 import pygame
 import sys
+import random
 
 # Initialize Pygame
 pygame.init()
 
-# Screen setup
-width = 600
-height = 400
+# Screen setup (fixed window size, not maximized)
+width = 800
+height = 600
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Move the Square")
 
 # Colors
 white = (255, 255, 255)
 blue = (0, 0, 255)
+red = (255, 0, 0)
 
 # Square properties
-square_x = 300
-square_y = 200
+start_x = width // 2
+start_y = height // 2
+square_x = start_x
+square_y = start_y
 square_size = 40
 speed = 5
+square_color = blue
+
+# Coin properties
+coin_radius = 10
+score = 0  # Track coins collected
+high_score = 0  # Track highest score
+
+def spawn_coin():
+    return [
+        random.randint(coin_radius, width - coin_radius),
+        random.randint(coin_radius, height - coin_radius)
+    ]
+
+coins = [spawn_coin()]  # Start with one coin
+
+# Enemy properties
+enemy_size = 40
+enemy_speed = 3
+enemies = []
+def spawn_enemy():
+    ex = random.randint(0, width - enemy_size)
+    ey = random.randint(0, height - enemy_size)
+    edir = [random.choice([-1, 1]), random.choice([-1, 1])]
+    return [ex, ey, edir]
+
+# Start with one enemy
+enemies.append(spawn_enemy())
 
 # Clock for frame rate
 clock = pygame.time.Clock()
+
+# Game state
+game_over = False
+
+def random_color():
+    return (random.randint(0,255), random.randint(0,255), random.randint(0,255))
 
 # Game loop
 running = True
@@ -31,30 +68,103 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        # Reset position with R key
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_r:
+                square_x = start_x
+                square_y = start_y
+                square_color = blue
+                coins = [spawn_coin()]
+                score = 0
+                enemy_speed = 3
+                enemies = [spawn_enemy()]
+                game_over = False
+            if event.key == pygame.K_ESCAPE:
+                running = False
 
-    # Get pressed keys
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT]:
-        square_x = square_x - speed
-    if keys[pygame.K_RIGHT]:
-        square_x = square_x + speed
-    if keys[pygame.K_UP]:
-        square_y = square_y - speed
-    if keys[pygame.K_DOWN]:
-        square_y = square_y + speed
+    if not game_over:
+        # Get pressed keys
+        keys = pygame.key.get_pressed()
+        moved = False
+        if keys[pygame.K_LEFT]:
+            square_x -= speed
+            moved = True
+        if keys[pygame.K_RIGHT]:
+            square_x += speed
+            moved = True
+        if keys[pygame.K_UP]:
+            square_y -= speed
+            moved = True
+        if keys[pygame.K_DOWN]:
+            square_y += speed
+            moved = True
 
-    # Keep square within screen boundaries
-    if square_x < 0:
-        square_x = 0
-    if square_x > width - square_size:
-        square_x = width - square_size
-    if square_y < 0:
-        square_y = 0
-    if square_y > height - square_size:
-        square_y = height - square_size
+        # Change color on movement
+        if moved:
+            square_color = random_color()
 
-    # Draw the square
-    pygame.draw.rect(screen, blue, (square_x, square_y, square_size, square_size))
+        # Keep square within screen boundaries
+        square_x = max(0, min(square_x, width - square_size))
+        square_y = max(0, min(square_y, height - square_size))
+
+        # Move enemies
+        for enemy in enemies:
+            enemy[0] += enemy_speed * enemy[2][0]
+            enemy[1] += enemy_speed * enemy[2][1]
+            if enemy[0] < 0 or enemy[0] > width - enemy_size:
+                enemy[2][0] *= -1
+            if enemy[1] < 0 or enemy[1] > height - enemy_size:
+                enemy[2][1] *= -1
+
+        # Draw coins and check for collection
+        coins_to_remove = []
+        for coin in coins:
+            pygame.draw.circle(screen, (255, 215, 0), coin, coin_radius)
+            # Collision with square
+            coin_rect = pygame.Rect(coin[0] - coin_radius, coin[1] - coin_radius, coin_radius*2, coin_radius*2)
+            square_rect = pygame.Rect(square_x, square_y, square_size, square_size)
+            if square_rect.colliderect(coin_rect):
+                coins_to_remove.append(coin)
+        for coin in coins_to_remove:
+            coins.remove(coin)
+            score += 1
+            enemy_speed += 0.5  # Increase enemy speed
+            coins.append(spawn_coin())  # Spawn a new coin immediately
+            if score % 5 == 0:
+                enemies.append(spawn_enemy())
+
+        # Draw scoreboard
+        font = pygame.font.SysFont(None, 32)
+        score_text = font.render(f"Coins: {score}", True, (0, 0, 0))
+        screen.blit(score_text, (10, 10))
+
+        # Draw high score
+        high_score_text = font.render(f"High Score: {high_score}", True, (0, 0, 0))
+        screen.blit(high_score_text, (10, 40))
+
+        # Draw enemies and check for collision
+        square_rect = pygame.Rect(square_x, square_y, square_size, square_size)
+        for enemy in enemies:
+            enemy_rect = pygame.Rect(enemy[0], enemy[1], enemy_size, enemy_size)
+            pygame.draw.rect(screen, red, enemy_rect)
+            if square_rect.colliderect(enemy_rect):
+                game_over = True
+                if score > high_score:
+                    high_score = score
+
+        # Draw the square
+        pygame.draw.rect(screen, square_color, square_rect)
+
+    else:
+        # Game Over screen
+        font = pygame.font.SysFont(None, 48)
+        over_text = font.render("Game Over!", True, (200, 0, 0))
+        screen.blit(over_text, (width//2 - 100, height//2 - 24))
+
+        # Draw high score on game over screen
+        font_small = pygame.font.SysFont(None, 32)
+        high_score_text = font_small.render(f"High Score: {high_score}", True, (0, 0, 0))
+        screen.blit(high_score_text, (width//2 - 80, height//2 + 30))
 
     # Update display
     pygame.display.flip()
