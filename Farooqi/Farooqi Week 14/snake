@@ -1,0 +1,137 @@
+import pygame
+import sys
+import random
+
+# Initialize Pygame
+pygame.init()
+
+# Screen settings
+width, height = 600, 400
+cell_size = 20
+screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption("Snake Game")
+
+# Colors
+black = (0, 0, 0)
+green = (0, 200, 0)
+red = (200, 0, 0)
+white = (255, 255, 255)
+brown = (139, 69, 19)  # For apple stem
+dark_red = (150, 0, 0) # For apple shadow
+
+# Snake settings
+snake = [(width // 2, height // 2)]
+direction = (cell_size, 0)  # Start moving right
+snake_length = 3
+
+# Food settings
+def random_food():
+    return (
+        random.randrange(0, width, cell_size),
+        random.randrange(0, height, cell_size)
+    )
+food = random_food()
+
+# Score
+score = 0
+font = pygame.font.SysFont(None, 32)
+
+# Clock
+clock = pygame.time.Clock()
+speed = 10
+
+game_over = False
+paused = False
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP and direction != (0, cell_size) and not paused:
+                direction = (0, -cell_size)
+            elif event.key == pygame.K_DOWN and direction != (0, -cell_size) and not paused:
+                direction = (0, cell_size)
+            elif event.key == pygame.K_LEFT and direction != (cell_size, 0) and not paused:
+                direction = (-cell_size, 0)
+            elif event.key == pygame.K_RIGHT and direction != (-cell_size, 0) and not paused:
+                direction = (cell_size, 0)
+            elif event.key == pygame.K_r and game_over:
+                # Reset game
+                snake = [(width // 2, height // 2)]
+                direction = (cell_size, 0)
+                snake_length = 3
+                food = random_food()
+                score = 0
+                game_over = False
+                paused = False
+            elif event.key == pygame.K_p and not game_over:
+                paused = not paused
+
+    if not game_over and not paused:
+        # Move snake
+        new_head = (snake[0][0] + direction[0], snake[0][1] + direction[1])
+        snake.insert(0, new_head)
+        if len(snake) > snake_length:
+            snake.pop()
+
+        # Check for collision with walls
+        if (
+            new_head[0] < 0 or new_head[0] >= width or
+            new_head[1] < 0 or new_head[1] >= height
+        ):
+            game_over = True
+
+        # Check for collision with self
+        if new_head in snake[1:]:
+            game_over = True
+
+        # Check for food
+        if new_head == food:
+            snake_length += 1
+            score += 1
+            food = random_food()
+
+    # Draw everything
+    screen.fill(black)
+    for i, segment in enumerate(snake):
+        pygame.draw.rect(screen, green, (*segment, cell_size, cell_size))
+    # Draw face on the head
+    head_x, head_y = snake[0]
+    eye_radius = 3
+    eye_offset_x = 5
+    eye_offset_y = 5
+    # Eyes (two small white circles)
+    pygame.draw.circle(screen, white, (head_x + eye_offset_x, head_y + eye_offset_y), eye_radius)
+    pygame.draw.circle(screen, white, (head_x + cell_size - eye_offset_x, head_y + eye_offset_y), eye_radius)
+    # Mouth (a small red line)
+    mouth_start = (head_x + 6, head_y + cell_size - 6)
+    mouth_end = (head_x + cell_size - 6, head_y + cell_size - 6)
+    pygame.draw.line(screen, red, mouth_start, mouth_end, 2)
+
+    # Draw apple-shaped food
+    apple_x, apple_y = food
+    # Apple body (red circle)
+    pygame.draw.ellipse(screen, red, (apple_x, apple_y, cell_size, cell_size))
+    # Apple shadow (dark red ellipse)
+    pygame.draw.ellipse(screen, dark_red, (apple_x + 4, apple_y + 8, cell_size // 2, cell_size // 3))
+    # Apple stem (brown line)
+    pygame.draw.line(screen, brown, (apple_x + cell_size // 2, apple_y + 2), (apple_x + cell_size // 2, apple_y - 4), 3)
+
+    # Draw score
+    score_text = font.render(f"Score: {score}", True, white)
+    screen.blit(score_text, (10, 10))
+
+    if paused and not game_over:
+        pause_font = pygame.font.SysFont(None, 48)
+        pause_text = pause_font.render("Paused", True, white)
+        screen.blit(pause_text, (width // 2 - 70, height // 2 - 24))
+
+    if game_over:
+        over_font = pygame.font.SysFont(None, 48)
+        over_text = over_font.render("Game Over! Press R to Restart", True, white)
+        screen.blit(over_text, (width // 2 - 180, height // 2 - 24))
+
+    pygame.display.flip()
+    clock.tick(speed)
