@@ -16,7 +16,7 @@ RED = (200, 30, 30)
 BLACK = (0, 0, 0)
 
 # --- Load and scale your tall car image ---
-CAR_IMG = pygame.image.load("car.png")
+CAR_IMG = pygame.image.load("car.png").convert_alpha()
 
 # Make the car smaller (width 28px)
 desired_width = 28
@@ -29,7 +29,7 @@ class Car:
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.angle = 0
+        self.angle = 270
         self.speed = 0
         self.max_speed = 5
         self.acceleration = 0.15
@@ -37,14 +37,16 @@ class Car:
         self.rotation_speed = 3
         self.lap = 0
         self.prev_on_line = False
+        self.just_started = True  # Prevent instant lap increment at start
 
     def reset(self):
-        self.x = 400
+        self.x = 410
         self.y = 120
-        self.angle = 0
+        self.angle = 270
         self.speed = 0
         self.lap = 0
         self.prev_on_line = False
+        self.just_started = True
 
     def update(self, keys):
         if keys[pygame.K_LEFT]:
@@ -77,10 +79,14 @@ class Car:
         else:
             self.speed = -self.speed / 2
 
-        # Lap counter: check if crossing the start/finish line (y in 80-140, x in 390-410)
-        on_line = (390 <= self.x <= 410) and (80 <= self.y <= 140)
-        if on_line and not self.prev_on_line:
+        # Lap counter: check if crossing the start/finish line (y in 80-200, x in 390-410)
+        on_line = (390 <= self.x <= 410) and (80 <= self.y <= 200)
+        # Only increment lap if coming from off the line and not just started
+        if on_line and not self.prev_on_line and not self.just_started:
             self.lap += 1
+        # After first time leaving the line, allow lap counting
+        if not on_line and self.just_started:
+            self.just_started = False
         self.prev_on_line = on_line
 
     def draw(self, surface):
@@ -90,22 +96,22 @@ class Car:
 
 def draw_track():
     screen.fill(BLACK)  # Background is now black
-    # Outer track (complex shape: rectangle + curves)
+    # Outer track 
     pygame.draw.rect(screen, GRAY, (100, 80, 600, 440))
     pygame.draw.ellipse(screen, GRAY, (80, 60, 80, 80))   # Top-left curve
     pygame.draw.ellipse(screen, GRAY, (640, 60, 80, 80))  # Top-right curve
     pygame.draw.ellipse(screen, GRAY, (80, 460, 80, 80))  # Bottom-left curve
     pygame.draw.ellipse(screen, GRAY, (640, 460, 80, 80)) # Bottom-right curve
 
-    # Inner grass (complex shape: rectangle + curves)
-    pygame.draw.rect(screen, BLACK, (220, 200, 360, 200))  # Inner is now black
+    # Inner track
+    pygame.draw.rect(screen, BLACK, (220, 200, 360, 200)) 
     pygame.draw.ellipse(screen, BLACK, (200, 180, 80, 80))
     pygame.draw.ellipse(screen, BLACK, (520, 180, 80, 80))
     pygame.draw.ellipse(screen, BLACK, (200, 340, 80, 80))
     pygame.draw.ellipse(screen, BLACK, (520, 340, 80, 80))
 
     # Start/finish line
-    pygame.draw.rect(screen, WHITE, (390, 80, 20, 60))
+    pygame.draw.rect(screen, WHITE, (390, 80, 20, 120)) 
     # Optional: add some red cones for visual interest
     for y in range(100, 500, 80):
         pygame.draw.circle(screen, RED, (110, y), 8)
@@ -134,7 +140,7 @@ def is_on_track(x, y):
 
     return on_outer and not in_inner
 
-player = Car(400, 120)
+player = Car(410, 120)
 
 font = pygame.font.SysFont(None, 36)
 
