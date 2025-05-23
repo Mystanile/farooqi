@@ -1,0 +1,162 @@
+import pygame
+import math
+import sys
+
+pygame.init()
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("2D Racing Game")
+clock = pygame.time.Clock()
+
+# --- Colors ---
+GRAY = (100, 100, 100)
+GREEN = (0, 150, 0)
+WHITE = (255, 255, 255)
+RED = (200, 30, 30)
+BLACK = (0, 0, 0)
+
+# --- Load and scale your tall car image ---
+CAR_IMG = pygame.image.load("car.png")
+
+# Make the car smaller (width 28px)
+desired_width = 28
+original_width, original_height = CAR_IMG.get_size()
+scale_factor = desired_width / original_width
+desired_height = int(original_height * scale_factor)
+CAR_IMG = pygame.transform.scale(CAR_IMG, (desired_width, desired_height))
+
+class Car: 
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.angle = 0
+        self.speed = 0
+        self.max_speed = 5
+        self.acceleration = 0.15
+        self.friction = 0.05
+        self.rotation_speed = 3
+        self.lap = 0
+        self.prev_on_line = False
+
+    def reset(self):
+        self.x = 400
+        self.y = 120
+        self.angle = 0
+        self.speed = 0
+        self.lap = 0
+        self.prev_on_line = False
+
+    def update(self, keys):
+        if keys[pygame.K_LEFT]:
+            self.angle += self.rotation_speed
+        if keys[pygame.K_RIGHT]:
+            self.angle -= self.rotation_speed
+
+        if keys[pygame.K_UP]:
+            self.speed += self.acceleration
+        elif keys[pygame.K_DOWN]:
+            self.speed -= self.acceleration
+        else:
+            if self.speed > 0:
+                self.speed -= self.friction
+            elif self.speed < 0:
+                self.speed += self.friction
+
+        self.speed = max(-self.max_speed / 2, min(self.speed, self.max_speed))
+
+        rad = math.radians(self.angle)
+        dx = -math.sin(rad) * self.speed
+        dy = -math.cos(rad) * self.speed
+
+        new_x = self.x + dx
+        new_y = self.y + dy
+
+        if is_on_track(new_x, new_y):
+            self.x = new_x
+            self.y = new_y
+        else:
+            self.speed = -self.speed / 2
+
+        # Lap counter: check if crossing the start/finish line (y in 80-140, x in 390-410)
+        on_line = (390 <= self.x <= 410) and (80 <= self.y <= 140)
+        if on_line and not self.prev_on_line:
+            self.lap += 1
+        self.prev_on_line = on_line
+
+    def draw(self, surface):
+        rotated_car = pygame.transform.rotate(CAR_IMG, self.angle)
+        rect = rotated_car.get_rect(center=(self.x, self.y))
+        surface.blit(rotated_car, rect)
+
+def draw_track():
+    screen.fill(BLACK)  # Background is now black
+    # Outer track (complex shape: rectangle + curves)
+    pygame.draw.rect(screen, GRAY, (100, 80, 600, 440))
+    pygame.draw.ellipse(screen, GRAY, (80, 60, 80, 80))   # Top-left curve
+    pygame.draw.ellipse(screen, GRAY, (640, 60, 80, 80))  # Top-right curve
+    pygame.draw.ellipse(screen, GRAY, (80, 460, 80, 80))  # Bottom-left curve
+    pygame.draw.ellipse(screen, GRAY, (640, 460, 80, 80)) # Bottom-right curve
+
+    # Inner grass (complex shape: rectangle + curves)
+    pygame.draw.rect(screen, BLACK, (220, 200, 360, 200))  # Inner is now black
+    pygame.draw.ellipse(screen, BLACK, (200, 180, 80, 80))
+    pygame.draw.ellipse(screen, BLACK, (520, 180, 80, 80))
+    pygame.draw.ellipse(screen, BLACK, (200, 340, 80, 80))
+    pygame.draw.ellipse(screen, BLACK, (520, 340, 80, 80))
+
+    # Start/finish line
+    pygame.draw.rect(screen, WHITE, (390, 80, 20, 60))
+    # Optional: add some red cones for visual interest
+    for y in range(100, 500, 80):
+        pygame.draw.circle(screen, RED, (110, y), 8)
+        pygame.draw.circle(screen, RED, (690, y), 8)
+
+def is_on_track(x, y):
+    # Outer boundary (ellipse + rectangle)
+    in_outer_rect = 100 < x < 700 and 80 < y < 520
+    in_outer_ellipses = (
+        ((x-120)**2)/1600 + ((y-100)**2)/1600 < 1 or  # Top-left
+        ((x-680)**2)/1600 + ((y-100)**2)/1600 < 1 or  # Top-right
+        ((x-120)**2)/1600 + ((y-500)**2)/1600 < 1 or  # Bottom-left
+        ((x-680)**2)/1600 + ((y-500)**2)/1600 < 1     # Bottom-right
+    )
+    on_outer = in_outer_rect or in_outer_ellipses
+
+    # Inner boundary (ellipse + rectangle)
+    in_inner_rect = 220 < x < 580 and 200 < y < 400
+    in_inner_ellipses = (
+        ((x-240)**2)/1600 + ((y-220)**2)/1600 < 1 or
+        ((x-560)**2)/1600 + ((y-220)**2)/1600 < 1 or
+        ((x-240)**2)/1600 + ((y-380)**2)/1600 < 1 or
+        ((x-560)**2)/1600 + ((y-380)**2)/1600 < 1
+    )
+    in_inner = in_inner_rect or in_inner_ellipses
+
+    return on_outer and not in_inner
+
+player = Car(400, 120)
+
+font = pygame.font.SysFont(None, 36)
+
+running = True
+while running:
+    keys = pygame.key.get_pressed()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+            player.reset()
+
+    player.update(keys)
+    draw_track()
+    player.draw(screen)
+
+    # Draw lap counter in top right
+    lap_text = font.render(f"Lap: {player.lap}", True, WHITE)
+    screen.blit(lap_text, (WIDTH - lap_text.get_width() - 20, 20))
+
+    pygame.display.flip()
+    clock.tick(60)
+
+pygame.quit()
+sys.exit()
