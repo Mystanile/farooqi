@@ -1,5 +1,6 @@
 import pygame
 import sys
+import os
 
 # Initialize Pygame
 pygame.init()
@@ -19,7 +20,8 @@ YELLOW = (255, 215, 0)
 GOAL_COLOR = (200, 200, 200)
 
 # Player settings
-PLAYER_SIZE = 40
+PLAYER_WIDTH = 20
+PLAYER_HEIGHT = 60
 PLAYER_SPEED = 6
 
 # Ball settings
@@ -38,17 +40,54 @@ score2 = 0
 font = pygame.font.SysFont(None, 48)
 small_font = pygame.font.SysFont(None, 28)
 
+# Name Input
+def get_name(prompt):
+    name = ""
+    input_active = True
+    input_font = pygame.font.SysFont(None, 48)
+    while input_active:
+        screen.fill(GREEN)
+        prompt_surf = input_font.render(prompt, True, BLACK)
+        screen.blit(prompt_surf, (WIDTH//2 - prompt_surf.get_width()//2, HEIGHT//2 - 60))
+        name_surf = input_font.render(name, True, WHITE)
+        screen.blit(name_surf, (WIDTH//2 - name_surf.get_width()//2, HEIGHT//2))
+        pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit(); sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN and name.strip():
+                    input_active = False
+                elif event.key == pygame.K_BACKSPACE:
+                    name = name[:-1]
+                elif len(name) < 12 and (event.unicode.isalnum() or event.unicode == " "):
+                    name += event.unicode
+    return name.strip()
+
+# Get player names
+player1_name = get_name("Enter name for Player 1 (WASD):")
+player2_name = get_name("Enter name for Player 2 (Arrows):")
+
+# Load and scale ball image to fully fill the ball (no gaps)
+ball_image_path = os.path.join(os.path.dirname(__file__), "ball.png")
+ball_img_raw = pygame.image.load(ball_image_path).convert_alpha()
+# Create a new surface with a white background
+ball_img = pygame.Surface((BALL_RADIUS*2, BALL_RADIUS*2), pygame.SRCALPHA)
+pygame.draw.circle(ball_img, WHITE, (BALL_RADIUS, BALL_RADIUS), BALL_RADIUS)
+# Stretch the image to fill the entire ball area
+ball_img_scaled = pygame.transform.smoothscale(ball_img_raw, (BALL_RADIUS*2, BALL_RADIUS*2))
+ball_img.blit(ball_img_scaled, (0, 0))
+
 # Initialize player and ball positions
 def reset_positions():
     global player1_rect, player2_rect, ball_pos, ball_vel
-    player1_rect = pygame.Rect(60, HEIGHT//2 - PLAYER_SIZE//2, PLAYER_SIZE, PLAYER_SIZE)
-    player2_rect = pygame.Rect(WIDTH-60-PLAYER_SIZE, HEIGHT//2 - PLAYER_SIZE//2, PLAYER_SIZE, PLAYER_SIZE)
+    player1_rect = pygame.Rect(60, HEIGHT//2 - PLAYER_HEIGHT//2, PLAYER_WIDTH, PLAYER_HEIGHT)
+    player2_rect = pygame.Rect(WIDTH-60-PLAYER_WIDTH, HEIGHT//2 - PLAYER_HEIGHT//2, PLAYER_WIDTH, PLAYER_HEIGHT)
     ball_pos = [WIDTH//2, HEIGHT//2]
     ball_vel = [BALL_SPEED, BALL_SPEED]
 
-# Ensure player rects are initialized before use
-player1_rect = pygame.Rect(60, HEIGHT//2 - PLAYER_SIZE//2, PLAYER_SIZE, PLAYER_SIZE)
-player2_rect = pygame.Rect(WIDTH-60-PLAYER_SIZE, HEIGHT//2 - PLAYER_SIZE//2, PLAYER_SIZE, PLAYER_SIZE)
+player1_rect = pygame.Rect(60, HEIGHT//2 - PLAYER_HEIGHT//2, PLAYER_WIDTH, PLAYER_HEIGHT)
+player2_rect = pygame.Rect(WIDTH-60-PLAYER_WIDTH, HEIGHT//2 - PLAYER_HEIGHT//2, PLAYER_WIDTH, PLAYER_HEIGHT)
 reset_positions()
 
 clock = pygame.time.Clock()
@@ -68,17 +107,19 @@ while running:
     pygame.draw.rect(screen, GOAL_COLOR, left_net)
     pygame.draw.rect(screen, GOAL_COLOR, right_net)
 
-    # Draw players
+    # Draw players as thin rectangles
     pygame.draw.rect(screen, RED, player1_rect)
     pygame.draw.rect(screen, BLUE, player2_rect)
-    # Player labels
-    label1 = small_font.render("Player 1", True, BLACK)
-    label2 = small_font.render("Player 2", True, BLACK)
+    # Player labels (use entered names)
+    label1 = small_font.render(player1_name, True, BLACK)
+    label2 = small_font.render(player2_name, True, BLACK)
     screen.blit(label1, (player1_rect.x, player1_rect.y - 25))
     screen.blit(label2, (player2_rect.x, player2_rect.y - 25))
 
-    # Draw ball
-    pygame.draw.circle(screen, YELLOW, (int(ball_pos[0]), int(ball_pos[1])), BALL_RADIUS)
+    # Draw ball with white background circle, then the image on top
+    ball_center = (int(ball_pos[0]), int(ball_pos[1]))
+    ball_rect = ball_img.get_rect(center=ball_center)
+    screen.blit(ball_img, ball_rect)
 
     # Draw scoreboard
     score_text = font.render(f"{score1}   :   {score2}", True, WHITE)
@@ -158,4 +199,3 @@ while running:
 
 pygame.quit()
 sys.exit()
-
