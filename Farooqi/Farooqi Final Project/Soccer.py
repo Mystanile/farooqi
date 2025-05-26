@@ -71,12 +71,7 @@ player2_name = get_name("Enter name for Player 2 (Arrows):")
 # Load and scale ball image to fully fill the ball (no gaps)
 ball_image_path = os.path.join(os.path.dirname(__file__), "ball.png")
 ball_img_raw = pygame.image.load(ball_image_path).convert_alpha()
-# Create a new surface with a white background
-ball_img = pygame.Surface((BALL_RADIUS*2, BALL_RADIUS*2), pygame.SRCALPHA)
-pygame.draw.circle(ball_img, WHITE, (BALL_RADIUS, BALL_RADIUS), BALL_RADIUS)
-# Stretch the image to fill the entire ball area
-ball_img_scaled = pygame.transform.smoothscale(ball_img_raw, (BALL_RADIUS*2, BALL_RADIUS*2))
-ball_img.blit(ball_img_scaled, (0, 0))
+ball_img = pygame.transform.smoothscale(ball_img_raw, (BALL_RADIUS*2, BALL_RADIUS*2))
 
 # Initialize player and ball positions
 def reset_positions():
@@ -111,8 +106,8 @@ while running:
     pygame.draw.rect(screen, RED, player1_rect)
     pygame.draw.rect(screen, BLUE, player2_rect)
     # Player labels (use entered names)
-    label1 = small_font.render(player1_name, True, BLACK)
-    label2 = small_font.render(player2_name, True, BLACK)
+    label1 = small_font.render(player1_name, True, RED)
+    label2 = small_font.render(player2_name, True, BLUE)
     screen.blit(label1, (player1_rect.x, player1_rect.y - 25))
     screen.blit(label2, (player2_rect.x, player2_rect.y - 25))
 
