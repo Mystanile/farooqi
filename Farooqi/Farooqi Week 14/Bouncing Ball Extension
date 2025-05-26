@@ -21,14 +21,15 @@ pygame.display.set_caption("Bouncing Ball Extended")
 clock = pygame.time.Clock()
 
 # Sound 
+meow_sound_path = os.path.join(os.path.dirname(__file__), "meow.wav")
+if os.path.exists(meow_sound_path):
+    meow_sound = pygame.mixer.Sound(meow_sound_path)
+else:
+    meow_sound = None
+
 def play_bounce_sound():
-    duration = 100  # milliseconds
-    freq = 440  # Hz
-    try:
-        import winsound
-        winsound.Beep(freq, duration)
-    except ImportError:
-        pass  # On non-Windows, skip sound
+    if meow_sound:
+        meow_sound.play()
 
 # Ball class
 class Ball:
@@ -75,8 +76,10 @@ bg_colors = [
 bg_index = 0
 
 # Ball image path 
-ball_image_path = r"C:\Users\Mohammad Khalil\Desktop\farooqi\Farooqi\ball.png"
+ball_image_path = os.path.join(os.path.dirname(__file__), "ball.png")
 
+print("Looking for ball.png at:", ball_image_path)
+print("Exists?", os.path.exists(ball_image_path))
 # Create balls
 balls = [
     # Image ball
