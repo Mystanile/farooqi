@@ -53,7 +53,6 @@
 COUNT = 0
 SUM = 0
 NUM = 0
-# ask if the users wants to add another number
 while True:
     ANS = input("Do you want to add another number? (yes/no): ").strip().lower()
     if ANS == 'yes':
