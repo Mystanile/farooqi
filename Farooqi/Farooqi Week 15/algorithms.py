@@ -22,20 +22,30 @@
 # else:
 #     print('invalid input')
 
-def gcdandlcm(A,B):
-    if A > B:
-        N = A
-        D = B
-    else:
-        N = B
-        D = A
-    r = N % D
-    while r != 0:
-        N = D
-        D = r
-        r = N % D
-    return D, (A * B) // D
+# def gcdandlcm(A,B):
+#     if A > B:
+#         N = A
+#         D = B
+#     else:
+#         N = B
+#         D = A
+#     r = N % D
+#     while r != 0:
+#         N = D
+#         D = r
+#         r = N % D
+#     return D, (A * B) // D
 
-A = int(input("Enter a number: "))
-B = int(input("Enter another number: "))
-print(gcdandlcm(A, B))
+# A = int(input("Enter a number: "))
+# B = int(input("Enter another number: "))
+# print(gcdandlcm(A, B))
+
+
+def prime(NUM):
+    if NUM < 2:
+        return False
+    for i in range(2, int(NUM**0.5) + 1):
+        if NUM % i == 0:
+            return False
+    return True
+print(prime(int(input("Enter a number: ")))) 
