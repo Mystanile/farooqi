@@ -41,11 +41,30 @@
 # print(gcdandlcm(A, B))
 
 
-def prime(NUM):
-    if NUM < 2:
-        return False
-    for i in range(2, int(NUM**0.5) + 1):
-        if NUM % i == 0:
-            return False
-    return True
-print(prime(int(input("Enter a number: ")))) 
+# def prime(NUM):
+#     if NUM < 2:
+#         return False
+#     for i in range(2, int(NUM**0.5) + 1):
+#         if NUM % i == 0:
+#             return False
+#     return True
+# print(prime(int(input("Enter a number: ")
+
+COUNT = 0
+SUM = 0
+NUM = 0
+# ask if the users wants to add another number
+while True:
+    ANS = input("Do you want to add another number? (yes/no): ").strip().lower()
+    if ANS == 'yes':
+        NUM = int(input("Enter a number: "))
+        SUM += NUM
+        COUNT += 1
+    elif ANS == 'no':
+        break
+    else:
+        print("Invalid input, please enter 'yes' or 'no'.")
+
+AVERAGE = SUM / COUNT
+print(SUM, AVERAGE)
+
