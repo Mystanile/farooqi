@@ -50,20 +50,33 @@
 #     return True
 # print(prime(int(input("Enter a number: ")
 
-COUNT = 0
-SUM = 0
-NUM = 0
-while True:
-    ANS = input("Do you want to add another number? (yes/no): ").strip().lower()
-    if ANS == 'yes':
-        NUM = int(input("Enter a number: "))
-        SUM += NUM
-        COUNT += 1
-    elif ANS == 'no':
-        break
-    else:
-        print("Invalid input, please enter 'yes' or 'no'.")
+# COUNT = 0
+# SUM = 0
+# NUM = 0
+# while True:
+#     NUMBERS = input("Enter a list of numbers separated by spaces: ")
+#     for num in NUMBERS.split():
+#         try:
+#             NUM = int(num)
+#         except ValueError:
+#             print(f"'{num}' is not a valid number, skipping.")
+#             continue
+#         SUM += NUM
+#         COUNT += 1
+#     break
+# AVERAGE = SUM / COUNT
+# print(SUM, AVERAGE)
 
-AVERAGE = SUM / COUNT
-print(SUM, AVERAGE)
 
+N = int(input("Enter a number: "))
+A = 0
+B = 1
+COUNT = 2
+
+print(A, B, end=' ')
+while COUNT < N:
+    C = A + B
+    print(C, end=' ')
+    A = B
+    B = C
+    COUNT += 1
